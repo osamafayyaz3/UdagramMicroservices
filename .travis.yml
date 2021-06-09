@@ -22,6 +22,6 @@ install:
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push osama85/microservice-project:reverseproxy
-  - docker push osama85/microservice-project:udagram-backend-user
-  - docker push osama85/microservice-project:udagram-backend-feed
-  - docker push osama85/microservice-project:udagram-frontend
+  - docker push osama85/microservice-project:udacity-restapi-user
+  - docker push osama85/microservice-project:udacity-restapi-feed
+  - docker push osama85/microservice-project:udacity-frontend
