@@ -1,16 +1,24 @@
-## Build
-FROM beevelop/ionic:latest AS ionic
-# Create app directory
+# Create workdir /usr/src/app
+FROM node:13-alpine as build
+
+# Select workdir
 WORKDIR /usr/src/app
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
+
+# Install app dependencies by copying
+# package.json and package-lock.json
 COPY package*.json ./
-RUN npm ci
-# Bundle app source
+
+# Install dependencies
+RUN npm install -g ionic
+RUN npm install
+
+# Copy source folder to app source
 COPY . .
+
+# Start build process
 RUN ionic build
-## Run 
+
+## Run
 FROM nginx:alpine
 #COPY www /usr/share/nginx/html
-COPY --from=ionic  /usr/src/app/www /usr/share/nginx/html
+COPY --from=build  /usr/src/app/www /usr/share/nginx/html
